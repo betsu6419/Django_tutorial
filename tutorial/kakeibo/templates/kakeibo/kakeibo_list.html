@@ -25,6 +25,7 @@
                  <th class="text-center">カテゴリ</th>
                  <th class="text-center">金額</th>
                  <th class="text-center">メモ</th>
+                 <th class = "text-center">更新・削除</th>
                </tr>
              </thead>
            　<!-- ここまでが表の列の定義-->
@@ -36,7 +37,10 @@
                    <td class="text-center" width="100">{{ item.category }}</td>
                    <td class="text-center" width="140">{{ item.money }}</td>
                    <td class="text-center" width="140">{{ item.memo }}</td>
-                 </tr>
+                   <td class="text-center" width="140">
+                    　　<a class="btn btn-primary" href="{% url 'kakeibo:kakeibo_update' item.pk %}">更新ページ</a>
+                       <a class="btn btn-danger" href="{% url 'kakeibo:kakeibo_delete' item.pk %}">削除ページ</a>
+                   </td>
              {% endfor %}
              </tbody>
            　<!-- ここまでが表のデータ部分の表示-->

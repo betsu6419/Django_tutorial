@@ -19,3 +19,18 @@ class KakeiboCreateView(CreateView):
 
 def create_done(request):
     return render(request,'kakeibo/create_done.html')
+
+class KakeiboUpdateView(UpdateView):
+    model = Kakeibo
+    form_class = KakeiboForm
+    success_url = reverse_lazy('kakeibo:update_done')
+
+def update_done(request):
+    return render(request,'kakeibo/update_done.html')
+
+class KakeiboDeleteView(DeleteView):
+    model = Kakeibo
+    success_url = reverse_lazy('kakeibo:delete_done')
+
+def delete_done(request):
+    return render(request,'kakeibo/delete_done.html')
