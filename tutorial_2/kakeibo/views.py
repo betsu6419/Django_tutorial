@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 # Create your views here.
 from django.views.generic import CreateView,ListView,UpdateView,DeleteView
 from .models import Category,Kakeibo
+from datetime import datetime
 
 from .test import test
   
@@ -13,6 +14,10 @@ class KakeiboListView(ListView):
 
     def queryset(self):
         return Kakeibo.objects.all()
+    
+    def send(self):
+        n = Kakeibo.objects.create(date = datetime.now)
+
 
 class KakeiboCreateView(CreateView):
     model = Kakeibo
