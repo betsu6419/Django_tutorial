@@ -1,67 +1,37 @@
-from django.shortcuts import render
-from .forms import KakeiboForm
-from django.urls import reverse_lazy
-# Create your views here.
-from django.views.generic import CreateView,ListView,UpdateView,DeleteView
-from .models import Category,Kakeibo
-from datetime import datetime
-
-from .test import test
-
-from django.template import loader
 from django.http import HttpResponse
-
-def search(request):
-    template = loader.get_template('kakeibo/search.html')
-    params = retrieve_all_get_parameters(request)
-    billionaires = get_list_of_billionaires(params)
-    context ={
-        'billionaires':billionaires
-    }
-
-    return HttpResponse(template.render(context,request))
-
-def get_list_of_billionaires(param):
-    try:
-        table = dynamodb.table
-  
-class KakeiboListView(ListView):
-    model = Kakeibo
-    template_name = 'kakeibo/kakeibo_list.html'
-
-    def queryset(self):
-        return Kakeibo.objects.all()
+from django.views import generic
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Location
+import io
+import matplotlib.pyplot as plt
+import numpy as np
+class IndexView(LoginRequiredMixin, generic.ListView): # generic.ListViewを継承
+    model = Location
+    paginate_by = 5 
+    ordering = ['-updated_at']
+    template_name = 'monitor/index.html'
+class DetailView(generic.DetailView):
+    model = Location
+    template_name = 'monitor/detail.html'
+# グラフ作成
+def setPlt(pk):
     
-    def send(self):
-        n = Kakeibo.objects.create(date = datetime.now)
-
-
-class KakeiboCreateView(CreateView):
-    model = Kakeibo
-    form_class = KakeiboForm
-    success_url = reverse_lazy('kakeibo:create_done')
-
-def create_done(request):
-    n = Kakeibo.objects.last()
-    n.result = test(int(n.money))
-    n.save()
-    return render(request,'kakeibo/create_done.html')
-
-class KakeiboUpdateView(UpdateView):
-    model = Kakeibo
-    form_class = KakeiboForm
-    success_url = reverse_lazy('kakeibo:update_done')
-
-def update_done(request):
-    n = Kakeibo.objects.last()
-    n.result = test(int(n.money))
-    n.save()
-    return render(request,'kakeibo/update_done.html')
-
-class KakeiboDeleteView(DeleteView):
-    model = Kakeibo
-    success_url = reverse_lazy('kakeibo:delete_done')
-
-def delete_done(request):
-    return render(request,'kakeibo/delete_done.html')
-
+    # 折れ線グラフを出力
+    # TODO: 本当はpkを基にしてモデルからデータを取得する。
+    x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    y = np.array([20, 90, 50, 30, 100, 80, 10, 60, 40, 70])
+    plt.plot(x, y)
+# svgへの変換
+def pltToSvg():
+    buf = io.BytesIO()
+    plt.savefig(buf, format='svg', bbox_inches='tight')
+    s = buf.getvalue()
+    buf.close()
+    return s
+def get_svg(request,  pk):
+    setPlt(pk)       # create the plot
+    svg = pltToSvg() # convert plot to SVG
+    plt.cla()        # clean up plt so it can be re-used
+    response = HttpResponse(svg, content_type='image/svg+xml')
+    return response
