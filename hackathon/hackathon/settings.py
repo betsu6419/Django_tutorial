@@ -11,7 +11,15 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import environ
 
+env = environ.Env()
+env.read_env('.env')
+
+AWS_ACCESS_KEY_ID =  ""
+AWS_SECRET_ACCESS_KEY = ""
+REGION_NAME = "ap-northeast-1"
+DYNAMODB_TABLE_NAME = "test3"
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
