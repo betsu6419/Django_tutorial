@@ -1,11 +1,52 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.conf import settings
 from .models import Stock
 from sklearn.linear_model import LinearRegression
 import numpy as np
 import datetime
+import boto3
+from decimal import Decimal
 
 
+
+def Update_from_dDB():
+    session = boto3.session.Session(
+    region_name = settings.REGION_NAME,
+    aws_access_key_id = settings.AWS_ACCESS_KEY_ID,
+    aws_secret_access_key = settings.AWS_SECRET_ACCESS_KEY,
+    )
+    dynamodb = session.resource('dynamodb')
+    table = dynamodb.Table(settings.DYNAMODB_TABLE_NAME)#insert table name 
+    response = table.scan()
+    time =[]
+    weight= []
+
+    #dynamoDBからのデータ取得
+    if(response['Count'] < 2):
+        raise Exception('quantity of records is less than 2')#2以下だと機械学習できないのでエラー
+    for i in range(response['Count']):
+        time.append(int(response['Items'][i]['time']))
+
+    for i in range(response['Count']):
+        weight.append(int(response['Items'][i]['weight']))
+
+    #ローカルDBへのデータ更新
+    for i in range(response['Count']):
+        print(i)
+        print(datetime.datetime.fromtimestamp(time[i]))
+        print(weight[i])
+        obj,created = Stock.objects.update_or_create(
+            date = datetime.datetime.fromtimestamp(time[i]),
+            money = int(weight[i]),
+            defaults = {'money':weight[i]}
+        )
+
+        print(obj)
+        print(created)
+        print("#########")
+    
+    
 
 #一覧表示用のDjango標準ビュー(ListView)を承継して一覧表示用のクラスを定義
 class StockListView(ListView):
@@ -13,6 +54,9 @@ class StockListView(ListView):
    model = Stock
    #データを渡すテンプレートファイルを指定
    template_name = 'stock/stock_list.html'
+   
+   #(澤邉)ここでも更新したいけど使用上更新されない？
+   Update_from_dDB()
 
    #家計簿テーブルの全データを取得するメソッドを定義
    def queryset(self):
@@ -21,6 +65,8 @@ class StockListView(ListView):
 def show_line_grahp(request):
    
    #全データ取得
+   Update_from_dDB()
+
    stock_data = Stock.objects.all()
    date_list=[]
    for i in stock_data:
@@ -52,7 +98,8 @@ def show_line_grahp(request):
                 } )
    
 def show_learn_grahp(request):
-   
+   Update_from_dDB
+
    #全データ取得
    stock_data = Stock.objects.all()
    date_list=[]
