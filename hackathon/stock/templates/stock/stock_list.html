@@ -13,8 +13,12 @@
      <!--ページタイトル-->
      <div class="card mb-3">
        <div class="card-header">
-         <h3><b>残量アプリ</b></h3></div>
+         <h3><b>残量一覧</b></h3></div>
        <div class="card-body"> 
+        <!-- ボタンの描画-->
+        <div class="text-center" width="140">
+            　　<a class="btn btn-outline-success" href="{% url 'stock:stock_line' %}">残量変動</a>
+            　　<a class="btn btn-outline-danger" href="{% url 'stock:stock_learn' %}">機械学習</a>
          <!-- テーブル表の定義 -->
          <div class="table-responsive">
          <table width="100%" class="table table-striped table-bordered table-hover">
