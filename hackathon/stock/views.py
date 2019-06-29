@@ -81,7 +81,7 @@ def show_line_grahp(request):
        for j in stock_data:
             if j.date.strftime('%Y/%m/%d')[:10]==x_label[i]:   
                 ln.append(j.money)
-       daily_min_data.append([x_label[i], min(ln)])
+       daily_min_data.append([x_label[i], ])
    ld=len(x_label)-1
    nowweight=daily_min_data[ld][1]
 
@@ -114,7 +114,7 @@ def show_learn_grahp(request):
        for j in stock_data:
             if j.date==redays[i]:   
                 ln.append(j.money)
-       daily_min_data.append([redays[i], min(ln)])
+       daily_min_data.append([redays[i], ln[-1])
    mass=[]
    for i,j in daily_min_data:
        mass.append(j)
