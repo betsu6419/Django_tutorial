@@ -33,26 +33,36 @@
              '{{item}}',
         {% endfor %}],
       datasets: [ 
+      {% for category_name in category_list %}  
        {
-        label: "{{残量}}",
+        label: "{{category_name}}",
         fill: true,
-          {% for color in border_color %}
-                borderColor : 'rgba(60, 190, 20, 0.8)',
+        {% for category, color in border_color %}
+               {% if category == category_name %}
+                  borderColor : "rgba({{color}})",
+               {% endif %}
           {% endfor %}
         
-           {% for color in background_color %}
-                backgroundColor : 'rgba(60, 190, 20, 0.3)',
+          {% for category, color in background_color %}
+               {% if category == category_name %}
+                  backgroundColor : "rgba({{color}})",
+               {% endif %}
            {% endfor %}
         data: [
         {% for time_label in x_label %}
-           {% for date, money in matrix_list %}
+           {% for date, category,money in matrix_list %}
+             {% if category == category_name %}
+
               {% if date == time_label %}
                   {{money}},
+              {% endif %}
               {% endif %}
            {% endfor %}
         {% endfor %}
         ],
        },
+
+     {% endfor %}
       ]
     },
        options: {
@@ -102,26 +112,34 @@
                '{{item}}',
           {% endfor %}],
         datasets: [ 
+          {% for category_name in category_list %}
          {
-          label: "{{残量}}",
+          label: "{{category_name}}",
           fill: true,
-            {% for color in border_color %}
-                  borderColor : 'rgba(254,97,132,0.8)',
+            {% for category,color in border_color %}
+            {% if category == category_name %}
+                  borderColor : "rgba({{color}})",
+               {% endif %}
             {% endfor %}
           
-             {% for color in background_color %}
-                  backgroundColor : 'rgba(254,97,132,0.5)',
+             {% for category,color in background_color %}
+             {% if category == category_name %}
+                  backgroundColor : "rgba({{color}})",
+               {% endif %}
              {% endfor %}
           data: [
           {% for time_label in x_label %}
-             {% for date, money in matrix_list %}
-                {% if date == time_label %}
-                    {{money}},
-                {% endif %}
+             {% for date, category,money in matrix_list %}
+                {% if category == category_name %}
+                  {% if date == time_label %}
+                      {{money}},
+                  {% endif %}
              {% endfor %}
           {% endfor %}
           ],
          },
+
+     {% endfor %}
         ]
       },
          options: {
