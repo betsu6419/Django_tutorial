@@ -21,24 +21,30 @@ def Update_from_dDB():
     response = table.scan()
     time =[]
     weight= []
+    category = []
 
     #dynamoDBからのデータ取得
-    if(response['Count'] < 2):
-        raise Exception('quantity of records is less than 2')#2以下だと機械学習できないのでエラー
+    #if(response['Count'] < 2):
+    #    raise Exception('quantity of records is less than 2')#2以下だと機械学習できないのでエラー
     for i in range(response['Count']):
         time.append(int(response['Items'][i]['time']))
 
     for i in range(response['Count']):
         weight.append(int(response['Items'][i]['weight']))
+    
+    for i in range(response['Count']):
+        category.append(str(response['Items'][i]['category']))
 
     #ローカルDBへのデータ更新
     for i in range(response['Count']):
         print(i)
         print(datetime.datetime.fromtimestamp(time[i]))
         print(weight[i])
+        print(category[i])
         obj,created = Stock.objects.update_or_create(
             date = datetime.datetime.fromtimestamp(time[i]),
             money = int(weight[i]),
+            category = str(category[i]),
             defaults = {'money':weight[i]}
         )
 
@@ -99,9 +105,8 @@ def show_line_grahp(request):
                         ln.append(j.money)
             if(len(ln) != 0):
                 daily_min_data.append([x_label[k],category, ln[-1]])
-        ld=len(x_label)-1
-        #nowweight.append(daily_min_data[ld][2])
-
+                nowweight_i = ln[-1]
+        nowweight.append([category,nowweight_i])    
     for x,category,weight in daily_min_data:
         for i,data in enumerate(matrix_list):
             if data[0] == x and data[1] == category:
@@ -228,7 +233,7 @@ def show_learn_grahp(request):
     for x,y in zip(category_list, background_color_list):
         background_color.append([x,y])
     
-    return render(request,'stock/stock_line.html',{
+    return render(request,'stock/stock_learn.html',{
        'x_label': x_label,
        'category_list':category_list,
        'border_color': border_color,

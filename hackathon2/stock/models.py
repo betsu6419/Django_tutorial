@@ -23,6 +23,6 @@ class Stock(models.Model):
    #カラムの定義
    date = models.DateField(verbose_name="日付",default=datetime.now)
    money = models.IntegerField(verbose_name="残量", help_text="単位はグラム")
-   category = models.CharField(max_length = 255)
+   category = models.CharField(max_length = 255,unique = True)
 
     

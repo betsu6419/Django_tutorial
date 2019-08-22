@@ -29,6 +29,8 @@
              　<!-- 表の列の定義-->
                <thead>
                    <tr style="background-color:rgb(224, 228, 226)">
+                    
+                   <th class="text-center width=10">種類</th>
                    <th class="text-center width=10">日付</th>
                    <th class="text-center">残量</th>
                  </tr>
@@ -37,8 +39,10 @@
                <hr>
              　<!-- 表のデータ部分の表示-->
                <tbody>
-                 {% for date, money in matrix_list %}
+                 {% for date,category, money in matrix_list %}
                    <tr class="odd gradeX text-center">
+                     
+                      <td class="text-center">{{ category}}</td>
                      <td class="text-center">{{ date}}</td>
                      <td class="text-center">{{ money }}</td>
                    </tr>
