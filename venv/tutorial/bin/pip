@@ -1,5 +1,4 @@
 #!/Users/yuuki/Documents/Django_tutorial/venv/tutorial/bin/python
-
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-
+AWS_ACCESS_KEY_ID =  "AKIAIW5RB7ODDDLZZ2JQ"
+AWS_SECRET_ACCESS_KEY = "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"
+REGION_NAME = "ap-northeast-1"
+DYNAMODB_TABLE_NAME = "test3"
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
