@@ -1,0 +1,10 @@
+from django.urls import path
+from . import views
+app_name = 'allergies'
+
+urlpatterns = [
+    # トップ画面
+    path('', views.Home.as_view(), name='home'),
+    path('upload', views.upload, name='upload'),
+    
+]

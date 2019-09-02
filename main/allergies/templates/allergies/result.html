@@ -1,0 +1,24 @@
+{% extends "allergies/base.html" %}
+{% block content %}
+<div class="mt-5 text-center">
+  {% for data in result %}
+    <img class="img-fluid" src="data:image/png;base64,{{ data.0 }}">
+    <p class="lead">画像は{{ data.1 }}です。</p>
+    <hr>
+  {% endfor %}
+  {% for data2 in result2 %}
+    <p class="lead">この食べ物には</p>
+    {% if data2.0 == 1%}
+      <p class="lead">卵が含まれます。</p>
+    {% endif %}
+    {% if data2.1 == 1%}
+      <p class="lead">牛乳が含まれます。</p>
+    {% endif %}    
+    {% if data2.2 == 1%}
+      <p class="lead">みかんが含まれます。</p>
+    {% endif %}
+  {% endfor %}
+  <a class="btn btn-lg btn-secondary"  href="{% url 'allergies:home' %}">戻る</a>
+</div>
+ 
+{% endblock %}
