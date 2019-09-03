@@ -1,21 +1,41 @@
 import base64
 import random
+import csv
+from .models import Allergies
+from .forms import AllergiesForm
+from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.views import generic
 import numpy as np
 from PIL import Image
- 
+
+#辞書の読み込み
+from django.core.files.storage import default_storage
+storage = default_storage
+storage.location = 'allergies/'
+dic = {}
+f = storage.open("allergy.csv",'r')
+reader = csv.reader(f)
+header = next(reader)
+for row in reader:
+    tmp = row[1:]
+    dic[row[0]] = [int(s) for s in tmp]
+
+class AllergiesCreateView(generic.CreateView):
+    model = Allergies
+    form_class = AllergiesForm
+    success_url = reverse_lazy('allergies:home')
+
 def predict(x):
     labels = []
     for i in range(x.size):
         a = random.random()
         if(a<=0.5):
-            labels.append("プリン")
+            labels.append("sushi")
         else:
-            labels.append("おこのみやき")
+            labels.append("cup_cakes")
     return labels
 
-dic = {"プリン":[1,0,1],"おこのみやき":[1,1,0]}
    
 
 class Home(generic.TemplateView):

@@ -8,5 +8,6 @@
     <input type="submit" class="btn btn-lg btn-secondary" value="送信">
     {% csrf_token %}
   </form>
+  <a class="btn btn-lg btn-secondary"  href="{% url 'allergies:create' %}">アレルギーの登録</a>
 </div>
 {% endblock %}

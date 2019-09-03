@@ -12,11 +12,38 @@
       <p class="lead">卵が含まれます。</p>
     {% endif %}
     {% if data2.1 == 1%}
-      <p class="lead">牛乳が含まれます。</p>
+      <p class="lead">乳が含まれます。</p>
     {% endif %}    
     {% if data2.2 == 1%}
-      <p class="lead">みかんが含まれます。</p>
+      <p class="lead">小麦が含まれます。</p>
     {% endif %}
+    {% if data2.3 == 1%}
+      <p class="lead">そばが含まれます。</p>
+    {% endif %}
+    {% if data2.4 == 1%}
+      <p class="lead">ピーナッツが含まれます。</p>
+    {% endif %}    
+    {% if data2.5 == 1%}
+      <p class="lead">えびが含まれます。</p>
+    {% endif %}
+    {% if data2.6 == 1%}
+    <p class="lead">かにが含まれます。</p>
+  {% endif %}
+  {% if data2.7 == 1%}
+    <p class="lead">あわびが含まれます。</p>
+  {% endif %}    
+  {% if data2.8 == 1%}
+    <p class="lead">大豆が含まれます。</p>
+  {% endif %}
+  {% if data2.9 == 1%}
+    <p class="lead">ごまが含まれます。</p>
+  {% endif %}
+  {% if data2.10 == 1%}
+    <p class="lead">肉が含まれます。</p>
+  {% endif %}    
+  {% if data2.11 == 1%}
+    <p class="lead">くるみが含まれます。</p>
+  {% endif %}
   {% endfor %}
   <a class="btn btn-lg btn-secondary"  href="{% url 'allergies:home' %}">戻る</a>
 </div>
