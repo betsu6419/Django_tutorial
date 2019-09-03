@@ -6,7 +6,7 @@ class Allergies(models.Model):
         db_table = "allergies"
         verbose_name = "アレルギー"
         verbose_name_plural = "アレルギー"
-    name = models.CharField(verbose_name = "名前",max_length = 500)
+    name = models.CharField(verbose_name = "名前",max_length = 500,unique = True)
     bool_0 = models.NullBooleanField(
         verbose_name='卵アレルギー',
         default=None,

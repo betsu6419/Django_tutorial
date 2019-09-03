@@ -4,7 +4,7 @@ app_name = 'allergies'
 
 urlpatterns = [
     # トップ画面
-    path('', views.Home.as_view(), name='home'),
+    path('', views.home, name='home'),
     path('upload', views.upload, name='upload'),
     path('create',views.AllergiesCreateView.as_view(),name = 'create')
 ]

@@ -1,13 +1,57 @@
 {% extends "allergies/base.html" %}
 {% block content %}
 <div class="mt-5 text-center">
-  <h1 class="display-1">ディープラーニングデモ</h1>
-  <p class="lead">手書きの画像をアップロードし、OKを押してください</p>
+  <h1 class="display-1">アレルギー物質検出アプリ</h1>
+  <p class="lead">自分の名前と食品の画像をアップロードし、OKを押してください</p>
   <form action="{% url 'allergies:upload' %}" method="POST" enctype="multipart/form-data">
     <input type="file" name="files[]" multiple>
+    <input type="text" name="name" multiple>
     <input type="submit" class="btn btn-lg btn-secondary" value="送信">
     {% csrf_token %}
   </form>
   <a class="btn btn-lg btn-secondary"  href="{% url 'allergies:create' %}">アレルギーの登録</a>
+  <table id = kakeibo_list width="100%" class="table table-striped table-bordered table-hover">
+    　<!-- 表の列の定義-->
+      <thead>
+        <tr>
+          <th class="text-center">名前</th>
+          <th class="text-center">卵</th>
+          <th class="text-center">乳</th>
+          <th class="text-center">小麦</th>
+          <th class="text-center">そば</th>
+          <th class = "text-center">ピーナッツ</th>
+          <th class="text-center">えび</th>
+          <th class="text-center">かに</th>
+          <th class="text-center">あわび</th>
+          <th class="text-center">大豆</th>
+          <th class="text-center">ごま</th>
+          <th class = "text-center">肉</th>
+          <th class = "text-center">くるみ</th>
+          
+        </tr>
+      </thead>
+    　<!-- ここまでが表の列の定義-->
+    　<!-- 表のデータ部分の表示-->
+      <tbody>
+        {% for item in object_list %}
+          <tr class="odd gradeX text-center">
+            <td class="text-center" width="100">{{ item.0}}</td>
+            <td class="text-center" width="100">{{ item.1 }}</td>
+            <td class="text-center" width="140">{{ item.2 }}</td>
+            <td class="text-center" width="140">{{ item.3 }}</td>
+            <td class="text-center" width="140">{{ item.4 }}</td>
+            <td class="text-center" width="100">{{ item.5 }}</td>
+            <td class="text-center" width="140">{{ item.6 }}</td>
+            <td class="text-center" width="140">{{ item.7 }}</td>
+            <td class="text-center" width="140">{{ item.8 }}</td>
+            <td class="text-center" width="100">{{ item.9 }}</td>
+            <td class="text-center" width="140">{{ item.10 }}</td>
+            <td class="text-center" width="140">{{ item.11 }}</td>
+            <td class="text-center" width="140">{{ item.12 }}</td>
+            
+      {% endfor %}
+      </tbody>
+    　<!-- ここまでが表のデータ部分の表示-->
+    </table>
 </div>
 {% endblock %}

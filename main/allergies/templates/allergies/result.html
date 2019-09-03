@@ -2,47 +2,94 @@
 {% block content %}
 <div class="mt-5 text-center">
   {% for data in result %}
-    <img class="img-fluid" src="data:image/png;base64,{{ data.0 }}">
-    <p class="lead">画像は{{ data.1 }}です。</p>
+    <img class="img-fluid" src="data:image/jpg;base64,{{ data.0 }}">
+    <p class="lead">画像は {{confidence}}%の確率で <font color = "0000ff" size = 8>{{ data.1 }}</font> です。</p>
     <hr>
   {% endfor %}
   {% for data2 in result2 %}
     <p class="lead">この食べ物には</p>
     {% if data2.0 == 1%}
-      <p class="lead">卵が含まれます。</p>
+      <p class="lead">卵</p>
     {% endif %}
     {% if data2.1 == 1%}
-      <p class="lead">乳が含まれます。</p>
+      <p class="lead">乳</p>
     {% endif %}    
     {% if data2.2 == 1%}
-      <p class="lead">小麦が含まれます。</p>
+      <p class="lead">小麦</p>
     {% endif %}
     {% if data2.3 == 1%}
-      <p class="lead">そばが含まれます。</p>
+      <p class="lead">そば</p>
     {% endif %}
     {% if data2.4 == 1%}
-      <p class="lead">ピーナッツが含まれます。</p>
+      <p class="lead">ピーナッツ</p>
     {% endif %}    
     {% if data2.5 == 1%}
-      <p class="lead">えびが含まれます。</p>
+      <p class="lead">えび</p>
     {% endif %}
     {% if data2.6 == 1%}
-    <p class="lead">かにが含まれます。</p>
+    <p class="lead">かに</p>
   {% endif %}
   {% if data2.7 == 1%}
-    <p class="lead">あわびが含まれます。</p>
+    <p class="lead">あわび</p>
   {% endif %}    
   {% if data2.8 == 1%}
-    <p class="lead">大豆が含まれます。</p>
+    <p class="lead">大豆</p>
   {% endif %}
   {% if data2.9 == 1%}
-    <p class="lead">ごまが含まれます。</p>
+    <p class="lead">ごま</p>
   {% endif %}
   {% if data2.10 == 1%}
-    <p class="lead">肉が含まれます。</p>
+    <p class="lead">肉</p>
   {% endif %}    
   {% if data2.11 == 1%}
-    <p class="lead">くるみが含まれます。</p>
+    <p class="lead">くるみ</p>
+  {% endif %}
+  <p class="lead">が含まれている可能性があります</p>
+  {% if conclusion == 1%}
+    <p class="lead">このうち</p>
+    {% if result3.0 == 1%}
+      <p class="lead">卵</p>
+    {% endif %}
+    {% if result3.1 == 1%}
+      <p class="lead">乳</p>
+    {% endif %}    
+    {% if result3.2 == 1%}
+      <p class="lead">小麦</p>
+    {% endif %}
+    {% if result3.3 == 1%}
+      <p class="lead">そば</p>
+    {% endif %}
+    {% if result3.4 == 1%}
+      <p class="lead">ピーナッツ</p>
+    {% endif %}    
+    {% if result3.5 == 1%}
+      <p class="lead">えび</p>
+    {% endif %}
+    {% if result3.6 == 1%}
+    <p class="lead">かに</p>
+  {% endif %}
+  {% if result3.7 == 1%}
+    <p class="lead">あわび</p>
+  {% endif %}    
+  {% if result3.8 == 1%}
+    <p class="lead">大豆</p>
+  {% endif %}
+  {% if result3.9 == 1%}
+    <p class="lead">ごま</p>
+  {% endif %}
+  {% if result3.10 == 1%}
+    <p class="lead">肉</p>
+  {% endif %}    
+  {% if result3.11 == 1%}
+    <p class="lead">くるみ</p>
+  {% endif %}
+    <p class="lead">が{{customer_name}} さんのアレルギーに該当する可能性があります。</p> 
+    <p class="lead">よって、{{customer_name}} さんがこの食べ物を食べるのは<font color="ff0000" size = 10>危険です。</font></p> 
+  {% elif conclusion == 0%}
+    <p class="lead">{{customer_name}} さんはこのうち該当するアレルギーがないので、安全に食べられると考えられます</p>
+    <p class="lead">念のため、確認されることをおすすめします。</p>
+  {% else %}
+    <p class="lead">error:名前が登録されていませんでした。</p>
   {% endif %}
   {% endfor %}
   <a class="btn btn-lg btn-secondary"  href="{% url 'allergies:home' %}">戻る</a>

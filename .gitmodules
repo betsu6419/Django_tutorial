@@ -1,0 +1,3 @@
+[submodule "venv/tutorial/bin/main/allergies/food_predict"]
+	path = venv/tutorial/bin/main/allergies/food_predict
+	url = https://kabuto6419@bitbucket.org/Kiro02kernel/food_predict.git
