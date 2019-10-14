@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ object.name }}</h1>
+<section class="post-text">
+    {{ object.memo|linebreaksbr }}
+</section>
+<section class="post-date">
+    <p>Created: {{ object.created_at }}<span>/</span>Updated: {{ object.updated_at }}</p>
+</section>
+<img src='{% url 'monitor:plot' object.pk %}' width=600 height=600>
+<section>
+    <p><a href="javascript:history.back()">< Back</a></p>
+</section>
+{% endblock %}
